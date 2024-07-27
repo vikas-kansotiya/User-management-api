@@ -18,19 +18,24 @@ class TestUserAPI(BaseTestCase):
             content_type="application/json",
         )
         self.assertEqual(response.status_code, 201)
-        self.assertIn("Users created successfully", response.data.decode())
+        self.assertIn("Users created successfully", response.get_json()["message"])
 
     def test_get_users(self):
         with self.app.app_context():
             user = User(
-                first_name="Vikas", last_name="Kansotiya", email="vikaskansotiyasujangarh@gmail.com"
+                first_name="Vikas", 
+                last_name="Kansotiya", 
+                email="vikaskansotiyasujangarh@gmail.com"
             )
             db.session.add(user)
             db.session.commit()
 
         response = self.client.get("/api/users")
         self.assertEqual(response.status_code, 200)
-        self.assertIn("John", response.data.decode())
+        users = response.get_json()["users"]
+
+        # Check if the user's data is in the response
+        self.assertTrue(any(u["first_name"] == "Vikas" and u["last_name"] == "Kansotiya" for u in users))
 
 
 if __name__ == "__main__":
