@@ -10,9 +10,9 @@ class TestUserAPI(BaseTestCase):
             "/api/user",
             data=json.dumps(
                 {
-                    "first_name": "John",
-                    "last_name": "Doe",
-                    "email": "john.doe@example.com",
+                    "first_name": "Vikas",
+                    "last_name": "Kansotiya",
+                    "email": "vikaskansotiyasujangarh@gmail.com",
                 }
             ),
             content_type="application/json",
@@ -23,7 +23,7 @@ class TestUserAPI(BaseTestCase):
     def test_get_users(self):
         with self.app.app_context():
             user = User(
-                first_name="John", last_name="Doe", email="john.doe@example.com"
+                first_name="Vikas", last_name="Kansotiya", email="vikaskansotiyasujangarh@gmail.com"
             )
             db.session.add(user)
             db.session.commit()
